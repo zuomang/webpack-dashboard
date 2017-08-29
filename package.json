@@ -16,11 +16,14 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
     "clean-webpack-plugin": "^0.1.16",
+    "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.5",
+    "expose-loader": "^0.7.3",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.30.1",
+    "imports-loader": "^0.7.1",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
     "node-sass": "^4.5.3",
@@ -33,6 +36,8 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "datatables.net": "^1.10.15",
+    "datatables.net-bs": "^1.10.15",
     "jquery": "^3.2.1",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0"

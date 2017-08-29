@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
 const extractLess = new ExtractTextPlugin({
@@ -18,7 +19,10 @@ console.log(resolve('src'));
 module.exports = {
 	entry: {
         index: './src/index.js',
-        //common: './src/commom.js'
+        common: './src/commom.js',
+        vendor: [
+            'axios'
+        ]
     },
 	output: {
         filename: 'js/[name].js',
@@ -27,6 +31,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue', '.json'],
         alias: {
+            'vue$': 'vue/dist/vue.esm.js',
             '@': resolve('src'),
             'modules': resolve('node_modules')
         }
@@ -49,6 +54,16 @@ module.exports = {
                 reduce_vars: true,
             }
         }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor'
+        }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+        }),
+        new CopyWebpackPlugin([
+            { from: './src/asserts/images/user2-160x160.jpg', to: 'images/' }
+        ]),
         extractLess
     ],
     module: {
@@ -56,6 +71,15 @@ module.exports = {
             {
                 test: /\.vue$/,
                 loader: 'vue-loader'
+            },
+            {
+                test: /\.css$/,
+                use: extractLess.extract({
+                    use: [{
+                        loader: "css-loader", options: { minimize: true }
+                    }],
+                    fallback: "style-loader"
+                })
             },
             {
                 test: /\.less$/,
@@ -88,6 +112,10 @@ module.exports = {
                 use: [{
                     loader: "file-loader", options: { outputPath: 'images/' }
                 }]
+            },
+            {
+                test: /datatables\.net.*/,
+                loader: 'imports-loader?define=>false'
             }
         ]
     }

@@ -77,6 +77,10 @@
 </template>
 
 <script>
+import axios from 'axios';
+import 'datatables.net';
+import dt from 'datatables.net-bs';
+dt(window, $);
 export default {
   name: 'zabbix',
   data: function() {
